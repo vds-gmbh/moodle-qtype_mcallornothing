@@ -18,6 +18,7 @@
  * Restore handler for Moodle 2.x/3.x Multichoiceset questions
  *
  * @package    qtype_mcallornothing
+ * @copyright  2010 onwards Eloy Lafuente (stronk7) {@link http://stronk7.com}
  * @copyright  2026 onwards VdS Schadenverhütung
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
@@ -28,6 +29,7 @@ defined('MOODLE_INTERNAL') || die();
  * Restore plugin class that provides the information needed to restore one mcallornothing qtype.
  *
  * @package    qtype_mcallornothing
+ * @copyright  2010 onwards Eloy Lafuente (stronk7) {@link http://stronk7.com}
  * @copyright  2026 onwards VdS Schadenverhütung
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */

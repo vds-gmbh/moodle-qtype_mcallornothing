@@ -18,6 +18,7 @@
  * Defines the editing form for the mcallornothing question type.
  *
  * @package    qtype_mcallornothing
+ * @copyright  2007 Jamie Pratt
  * @copyright  2026 onwards VdS Schadenverhütung
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
@@ -28,6 +29,7 @@ defined('MOODLE_INTERNAL') || die();
  * All-or-Nothing multiple choice editing form definition.
  *
  * @package    qtype_mcallornothing
+ * @copyright  2007 Jamie Pratt
  * @copyright  2026 onwards VdS Schadenverhütung
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */

@@ -18,6 +18,7 @@
  * Defines the hooks necessary to make the oumultiresponse question type combinable
  *
  * @package   qtype_mcallornothing
+ * @copyright  2019 Jean-Michel Vedrine
  * @copyright  2026 onwards VdS Schadenverhütung
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
@@ -27,6 +28,7 @@ defined('MOODLE_INTERNAL') || die();
 /**
  * Defines the hooks necessary to make the oumultiresponse question type combinable
  *
+ * @copyright  2019 Jean-Michel Vedrine
  * @copyright  2026 onwards VdS Schadenverhütung
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
@@ -88,6 +90,7 @@ class qtype_combined_combinable_type_mcallornothing extends qtype_combined_combi
 /**
  * Defines the hooks necessary to make the oumultiresponse question type combinable
  *
+ * @copyright  2019 Jean-Michel Vedrine
  * @copyright  2026 onwards VdS Schadenverhütung
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */

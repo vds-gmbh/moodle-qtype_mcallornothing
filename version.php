@@ -18,6 +18,7 @@
  * Version information for the All-or-Nothing Multiple Choice question type.
  *
  * @package    qtype_mcallornothing
+ * @copyright  1999 onwards Martin Dougiamas  {@link http://moodle.com}
  * @copyright  2026 onwards VdS Schadenverhütung
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */

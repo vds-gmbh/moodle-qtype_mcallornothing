@@ -18,6 +18,7 @@
  * Mobile output class for question type mcallornothing.
  *
  * @package qtype_mcallornothing
+ * @copyright  2018 Zvonko Martinovic
  * @copyright 2026 onwards VdS Schadenverhütung
  * @license http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
@@ -30,6 +31,7 @@ defined('MOODLE_INTERNAL') || die();
  * Mobile output class for question type mcallornothing.
  *
  * @package qtype_mcallornothing
+ * @copyright  2018 Zvonko Martinovic
  * @copyright 2026 onwards VdS Schadenverhütung
  * @license http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */

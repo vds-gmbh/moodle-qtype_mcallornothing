@@ -18,6 +18,8 @@
  * The questiontype class for the multiple choice question type.
  *
  * @package    qtype_mcallornothing
+ * @copyright  1999 onwards Martin Dougiamas  {@link http://moodle.com}
+ * @copyright  2010 The Open University
  * @copyright  2026 onwards VdS Schadenverhütung
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
@@ -32,6 +34,8 @@ require_once($CFG->dirroot . '/question/format/xml/format.php');
  * The All-or-Nothing multiple choice question type.
  *
  * @package    qtype_mcallornothing
+ * @copyright  1999 onwards Martin Dougiamas  {@link http://moodle.com}
+ * @copyright  2010 The Open University
  * @copyright  2026 onwards VdS Schadenverhütung
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
@@ -736,6 +740,8 @@ class qtype_mcallornothing extends question_type {
  * This has an extra option for whether to show the feedback for each choice.
  *
  * @package    qtype_mcallornothing
+ * @copyright  1999 onwards Martin Dougiamas  {@link http://moodle.com}
+ * @copyright  2010 The Open University
  * @copyright  2026 onwards VdS Schadenverhütung
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */

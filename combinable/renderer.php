@@ -18,6 +18,7 @@
  * Combined question embedded sub question renderer class.
  *
  * @package   qtype_mcallornothing
+ * @copyright  2019 Jean-Michel Vedrine
  * @copyright  2026 onwards VdS Schadenverhütung
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
@@ -29,6 +30,7 @@ defined('MOODLE_INTERNAL') || die();
 /**
  * Combined question embedded sub question renderer class
  *
+ * @copyright  2019 Jean-Michel Vedrine
  * @copyright  2026 onwards VdS Schadenverhütung
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */

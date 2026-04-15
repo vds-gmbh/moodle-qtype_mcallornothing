@@ -18,6 +18,7 @@
  * Mobile app addon definition for qtype_mcallornothing.
  *
  * @package    qtype_mcallornothing
+ * @copyright  2018 Jean-Michel Vedrine
  * @copyright  2026 onwards VdS Schadenverhütung
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */

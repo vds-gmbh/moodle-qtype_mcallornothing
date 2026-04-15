@@ -18,6 +18,8 @@
  * All-or-Nothing multiple choice question definition class.
  *
  * @package    qtype_mcallornothing
+ * @copyright  2009 The Open University
+ * @copyright  2010 The Open University
  * @copyright  2026 onwards VdS Schadenverhütung
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
@@ -30,6 +32,8 @@ require_once($CFG->dirroot . '/question/type/multichoice/question.php');
  * Represents an All-or-Nothing multiple response question.
  *
  * @package    qtype_mcallornothing
+ * @copyright  2009 The Open University
+ * @copyright  2010 The Open University
  * @copyright  2026 onwards VdS Schadenverhütung
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */

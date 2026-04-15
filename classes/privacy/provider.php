@@ -18,6 +18,7 @@
  * Privacy Subsystem implementation for qtype_mcallornothing.
  *
  * @package    qtype_mcallornothing
+ * @copyright  2019 Jean-Michel Vedrine
  * @copyright  2026 onwards VdS Schadenverhütung
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
@@ -29,6 +30,7 @@ defined('MOODLE_INTERNAL') || die();
 /**
  * Privacy Subsystem for qtype_mcallornothing implementing null_provider.
  *
+ * @copyright  2019 Jean-Michel Vedrine
  * @copyright  2026 onwards VdS Schadenverhütung
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */

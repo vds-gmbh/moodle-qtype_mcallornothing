@@ -18,6 +18,7 @@
  * Unit tests for the mulitple choice question definition class.
  *
  * @package    qtype_mcallornothing
+ * @copyright  2009 The Open University
  * @copyright  2026 onwards VdS Schadenverhütung
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
@@ -30,6 +31,7 @@ require_once($CFG->dirroot . '/question/type/mcallornothing/questiontype.php');
 /**
  * Unit tests for the multiple choice all or nothing question definition class.
  *
+ * @copyright  2009 The Open University
  * @copyright  2026 onwards VdS Schadenverhütung
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */

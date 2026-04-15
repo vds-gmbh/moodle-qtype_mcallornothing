@@ -18,6 +18,7 @@
  * Contains the helper class for the select missing words question type tests.
  *
  * @package    qtype_mcallornothing
+ * @copyright  2011 The Open University
  * @copyright  2026 onwards VdS Schadenverhütung
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
@@ -25,6 +26,7 @@
 /**
  * Test helper class for the all or nothing multichoice question type.
  *
+ * @copyright  2011 The Open University
  * @copyright  2026 onwards VdS Schadenverhütung
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */

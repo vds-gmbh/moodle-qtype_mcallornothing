@@ -19,6 +19,7 @@
  *
  * @package    qtype_mcallornothing
  * @category   test
+ * @copyright  2020 Jun Pataleta
  * @copyright  2026 onwards VdS Schadenverhütung
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
@@ -28,6 +29,7 @@
  *
  * @package    qtype_mcallornothing
  * @category   test
+ * @copyright  2020 Jun Pataleta
  * @copyright  2026 onwards VdS Schadenverhütung
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */

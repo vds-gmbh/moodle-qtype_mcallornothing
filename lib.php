@@ -18,6 +18,7 @@
  * Serve question type files.
  *
  * @package    qtype_mcallornothing
+ * @copyright  Dongsheng Cai <dongsheng@moodle.com>
  * @copyright  2026 onwards VdS Schadenverhütung
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
