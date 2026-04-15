@@ -17,6 +17,7 @@
         <FIELD NAME="answernumbering" TYPE="char" LENGTH="10" NOTNULL="true" DEFAULT="abc" SEQUENCE="false" COMMENT="Indicates how and whether the choices should be numbered."/>
         <FIELD NAME="shownumcorrect" TYPE="int" LENGTH="2" NOTNULL="true" DEFAULT="0" SEQUENCE="false" COMMENT="If true, then when the user gets a multiple-response question partially correct, tell them how many choices they got correct alongside the feedback."/>
         <FIELD NAME="showstandardinstruction" TYPE="int" LENGTH="2" NOTNULL="true" DEFAULT="1" SEQUENCE="false" COMMENT="Whether standard instruction ('Select one or more:') is displayed"/>
+        <FIELD NAME="grace" TYPE="int" LENGTH="2" NOTNULL="true" DEFAULT="0" SEQUENCE="false" COMMENT="If 1, award 50% when at least one correct choice is selected and no incorrect choices are selected. If 0 (default), use strict all-or-nothing grading."/>
       </FIELDS>
       <KEYS>
         <KEY NAME="primary" TYPE="primary" FIELDS="id"/>

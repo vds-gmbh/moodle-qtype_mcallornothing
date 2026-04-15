@@ -198,13 +198,7 @@ class qtype_mcallornothing extends question_type {
             $options->layout = $question->layout;
         }
         $options->answernumbering = $question->answernumbering;
-
-        // SYNERGY LEARNING VS3-26: Local plugin to handle partial marking starts.
-        if (class_exists(\local_vdspartialmarking\hooks::class)) {
-            \local_vdspartialmarking\hooks::save_question_partial_marking_option($options, $question);
-        }
-        // SYNERGY LEARNING VS3-26: Local plugin to handle partial marking ends.
-
+        $options->grace = !empty($question->grace) ? 1 : 0;
         $options->shuffleanswers = $question->shuffleanswers;
         $options->showstandardinstruction = !empty($question->showstandardinstruction);
         $options->correctfeedback = $this->import_or_save_files(
@@ -359,12 +353,7 @@ class qtype_mcallornothing extends question_type {
         $question->shuffleanswers = $questiondata->options->shuffleanswers;
         $question->answernumbering = $questiondata->options->answernumbering;
         $question->showstandardinstruction = $questiondata->options->showstandardinstruction;
-
-        // SYNERGY LEARNING VS3-26: Local plugin to handle partial marking starts.
-        if (class_exists(\local_vdspartialmarking\hooks::class)) {
-            \local_vdspartialmarking\hooks::initalise_partial_marking_option($question, $questiondata);
-        }
-        // SYNERGY LEARNING VS3-26: Local plugin to handle partial marking ends.
+        $question->grace = !empty($questiondata->options->grace) ? 1 : 0;
 
         if (!empty($questiondata->options->layout)) {
             $question->layout = $questiondata->options->layout;
@@ -556,13 +545,8 @@ class qtype_mcallornothing extends question_type {
             $expout .= "    <shownumcorrect/>\n";
         }
         $expout .= "    <answernumbering>{$question->options->answernumbering}</answernumbering>\n";
-
-        // SYNERGY LEARNING VS3-26: Local plugin to handle partial marking starts.
-        if (class_exists(\local_vdspartialmarking\hooks::class)) {
-            \local_vdspartialmarking\hooks::add_partial_marking_to_export($expout, $question);
-        }
-        // SYNERGY LEARNING VS3-26: Local plugin to handle partial marking ends.
-
+        $grace = !empty($question->options->grace) ? 1 : 0;
+        $expout .= "    <grace>{$grace}</grace>\n";
         $expout .= "    <showstandardinstruction>{$question->options->showstandardinstruction}</showstandardinstruction>\n";
         $expout .= $format->write_answers($question->options->answers);
 
@@ -586,12 +570,7 @@ class qtype_mcallornothing extends question_type {
 
         $question = $format->import_headers($data);
         $question->qtype = 'mcallornothing';
-
-        // SYNERGY LEARNING VS3-26: Local plugin to handle partial marking starts.
-        if (class_exists(\local_vdspartialmarking\hooks::class)) {
-            \local_vdspartialmarking\hooks::set_partial_marking_in_xml_import($question, $format, $data);
-        }
-        // SYNERGY LEARNING VS3-26: Local plugin to handle partial marking ends.
+        $question->grace = (int) $format->getpath($data, ['#', 'grace', 0, '#'], 0);
 
         $question->shuffleanswers = $format->trans_single(
             $format->getpath($data, ['#', 'shuffleanswers', 0, '#'], 1)

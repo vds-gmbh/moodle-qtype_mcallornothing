@@ -55,14 +55,7 @@ class backup_qtype_mcallornothing_plugin extends backup_qtype_plugin {
             'layout', 'shuffleanswers',
             'correctfeedback', 'correctfeedbackformat',
             'incorrectfeedback', 'incorrectfeedbackformat', 'answernumbering',
-            'shownumcorrect', 'showstandardinstruction']);
-
-        // SYNERGY LEARNING VS3-26: Local plugin to handle partial marking starts.
-        // Create a new backup element with the partial marking option.
-        if (class_exists(\local_vdspartialmarking\hooks::class)) {
-            $mcallornothing = \local_vdspartialmarking\hooks::create_backup_item();
-        }
-        // SYNERGY LEARNING VS3-26: Local plugin to handle partial marking ends.
+            'shownumcorrect', 'showstandardinstruction', 'grace']);
 
         // Now the own qtype tree.
         $pluginwrapper->add_child($mcallornothing);

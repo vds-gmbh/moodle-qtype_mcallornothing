@@ -68,11 +68,16 @@ class qtype_mcallornothing_edit_form extends question_edit_form {
         $mform->addHelpButton('showstandardinstruction', 'showstandardinstruction', 'qtype_mcallornothing');
         $mform->setDefault('showstandardinstruction', 0);
 
-        // SYNERGY LEARNING VS3-26: Local plugin to handle partial marking starts.
-        if (class_exists(local_vdspartialmarking\hooks::class)) {
-            \local_vdspartialmarking\hooks::add_partial_marking_option($mform);
-        }
-        // SYNERGY LEARNING VS3-26: Local plugin to handle partial marking ends.
+        $mform->addElement(
+            'advcheckbox',
+            'grace',
+            get_string('grace', 'qtype_mcallornothing'),
+            null,
+            null,
+            [0, 1]
+        );
+        $mform->addHelpButton('grace', 'grace', 'qtype_mcallornothing');
+        $mform->setDefault('grace', 0);
 
         $this->add_per_answer_fields(
             $mform,
@@ -210,12 +215,7 @@ class qtype_mcallornothing_edit_form extends question_edit_form {
             $question->answernumbering = $question->options->answernumbering;
             $question->shownumcorrect = $question->options->shownumcorrect;
             $question->showstandardinstruction = $question->options->showstandardinstruction;
-
-            // SYNERGY LEARNING VS3-26: Local plugin to handle partial marking starts.
-            if (class_exists(\local_vdspartialmarking\hooks::class)) {
-                \local_vdspartialmarking\hooks::set_question_partial_marking_option($question);
-            }
-            // SYNERGY LEARNING VS3-26: Local plugin to handle partial marking ends.
+            $question->grace = !empty($question->options->grace) ? 1 : 0;
 
             // Prepare feedback editor to display files in draft area.
             foreach (['correctfeedback', 'incorrectfeedback'] as $feedbackname) {

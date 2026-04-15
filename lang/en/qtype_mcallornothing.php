@@ -25,6 +25,8 @@
 $string['correctanswer'] = 'Correct';
 $string['deletedchoice'] = 'This choice was deleted after the attempt was started.';
 $string['errnocorrect'] = 'At least one of the choices should be correct so that it is possible to get a full grade for this question.';
+$string['grace'] = 'Award 50% for a partially correct answer';
+$string['grace_help'] = 'By default this question type is strictly all-or-nothing: the respondent must select every correct choice and no incorrect choices to score any marks. If this option is enabled, the respondent is awarded 50% of the marks when they select at least one correct choice and no incorrect choices. 100% still requires a fully correct response.';
 $string['pluginname'] = 'All-or-Nothing Multiple Choice';
 $string['pluginname_help'] = 'After an optional introduction, the respondent can choose one or more answers.  If the chosen answers correspond exactly to the "Correct" choices defined in the question, the respondent gets 100%.  If he/she chooses any "Incorrect" choices or does not select all of the "Correct" choices, the grade is 0%. At least one choice must be marked correct for each question.  Add a "None of the above" option to handle a question where none of the other choices are correct.  Unlike the multiple choice question with fractional grades, the only possible grades for an all-or-nothing question are 100% or 0%';
 $string['pluginname_link'] = 'question/type/mcallornothing';

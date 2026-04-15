@@ -60,12 +60,28 @@ function xmldb_qtype_mcallornothing_install(): bool {
  * Existing rows in the destination (matched by questionid) are left untouched
  * so the migration is idempotent if the install script is ever re-run.
  *
+ * The grace flag is derived from the source: if local_vdspartialmarking added
+ * a nograce column on qtype_multichoiceset_options, the value is inverted
+ * (old nograce=1 -> new grace=0, old nograce=0 -> new grace=1). When the
+ * source has no such column, grace defaults to 0 (strict), matching the
+ * upstream qtype_multichoiceset semantics.
+ *
  * @param \moodle_database $db
  * @return int Number of rows inserted.
  */
 function qtype_mcallornothing_migrate_options(\moodle_database $db): int {
     $existing = $db->get_fieldset_select('qtype_mcallornothing_options', 'questionid', '1=1');
     $existing = array_flip($existing);
+
+    // Only copy fields that exist in the destination schema so that unknown
+    // extras on the source side (from partial-marking or other plugins) do
+    // not break the insert.
+    $targetcolumns = $db->get_columns('qtype_mcallornothing_options');
+    unset($targetcolumns['id'], $targetcolumns['grace']);
+
+    // Detect whether the source table carries the legacy nograce column.
+    $sourcecolumns = $db->get_columns('qtype_multichoiceset_options');
+    $hasnograce = isset($sourcecolumns['nograce']);
 
     $records = $db->get_recordset('qtype_multichoiceset_options');
     $batch = [];
@@ -76,8 +92,23 @@ function qtype_mcallornothing_migrate_options(\moodle_database $db): int {
         if (isset($existing[$record->questionid])) {
             continue;
         }
-        unset($record->id);
-        $batch[] = $record;
+
+        $new = new \stdClass();
+        foreach (array_keys($targetcolumns) as $column) {
+            if (property_exists($record, $column)) {
+                $new->$column = $record->$column;
+            }
+        }
+
+        // Invert legacy nograce semantics: strict-by-default becomes grace=0,
+        // the previous "allow partial credit" becomes grace=1.
+        if ($hasnograce && property_exists($record, 'nograce')) {
+            $new->grace = empty($record->nograce) ? 1 : 0;
+        } else {
+            $new->grace = 0;
+        }
+
+        $batch[] = $new;
 
         if (count($batch) >= $batchsize) {
             $db->insert_records('qtype_mcallornothing_options', $batch);

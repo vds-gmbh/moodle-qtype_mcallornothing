@@ -2,6 +2,16 @@ Release notes
 -------------
 
 Date          Version   Comment
+2026/04/15    1.1.0     Absorb partial-marking feature previously provided by
+                        the external local_vdspartialmarking plugin. New grace
+                        column on qtype_mcallornothing_options (default 0 =
+                        strict all-or-nothing, matching upstream qtype_multichoiceset
+                        semantics). Per-question checkbox "Award 50% for a
+                        partially correct answer" as an opt-in. Backup/restore
+                        and XML import/export handle the new flag. Install
+                        migration from qtype_multichoiceset inverts the legacy
+                        nograce flag added by local_vdspartialmarking so that
+                        the per-question behaviour is preserved.
 2026/04/15    1.0.0     Initial release for Moodle 4.5. Based on qtype_multichoiceset.
                         Install hook auto-migrates existing qtype_multichoiceset
                         questions, options, plugin config and file records into

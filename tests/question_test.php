@@ -81,25 +81,66 @@ class question_test extends advanced_testcase {
         ));
     }
 
-    public function test_grading() {
+    public function test_grading_strict_default() {
         $question = $this->get_test_mcallornothing_question('two_of_four');
         $question->shuffleanswers = false;
+        $question->grace = 0;
         $question->start_attempt(new question_attempt_step(), 1);
 
+        // Fully correct response: 100%.
         $this->assertEquals(
             [1, question_state::$gradedright],
             $question->grade_response(['choice0' => '1', 'choice2' => '1'])
         );
+
+        // Partially correct with no wrong selections: 0% under strict default.
         $this->assertEquals(
             [0, question_state::$gradedwrong],
             $question->grade_response(['choice0' => '1'])
         );
+
+        // Any wrong selection: 0%.
         $this->assertEquals(
             [0, question_state::$gradedwrong],
             $question->grade_response(
                 ['choice0' => '1', 'choice1' => '1', 'choice2' => '1']
             )
         );
+
+        // Only wrong choice selected: 0%.
+        $this->assertEquals(
+            [0, question_state::$gradedwrong],
+            $question->grade_response(['choice1' => '1'])
+        );
+    }
+
+    public function test_grading_with_grace() {
+        $question = $this->get_test_mcallornothing_question('two_of_four');
+        $question->shuffleanswers = false;
+        $question->grace = 1;
+        $question->start_attempt(new question_attempt_step(), 1);
+
+        // Fully correct response: 100%.
+        $this->assertEquals(
+            [1, question_state::$gradedright],
+            $question->grade_response(['choice0' => '1', 'choice2' => '1'])
+        );
+
+        // Partially correct with no wrong selections: 50% (grace opt-in).
+        $this->assertEquals(
+            [0.5, question_state::$gradedpartial],
+            $question->grade_response(['choice0' => '1'])
+        );
+
+        // Any wrong selection disables grace: 0%.
+        $this->assertEquals(
+            [0, question_state::$gradedwrong],
+            $question->grade_response(
+                ['choice0' => '1', 'choice1' => '1', 'choice2' => '1']
+            )
+        );
+
+        // Only wrong choice selected: 0%.
         $this->assertEquals(
             [0, question_state::$gradedwrong],
             $question->grade_response(['choice1' => '1'])

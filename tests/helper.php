@@ -97,6 +97,7 @@ class qtype_mcallornothing_test_helper {
         $qdata->options->incorrectfeedback
                 = test_question_maker::STANDARD_OVERALL_INCORRECT_FEEDBACK;
         $qdata->options->incorrectfeedbackformat = FORMAT_HTML;
+        $qdata->options->grace = 0;
 
         $qdata->options->answers = [
             13 => (object) [

@@ -37,10 +37,15 @@ class qtype_mcallornothing_question extends qtype_multichoice_multi_question {
     /** @var int standard instruction to be displayed if enabled. */
     public $showstandardinstruction = 0;
 
+    /** @var int if 1, award 50% for partially correct and no-wrong; if 0 (default), strict all-or-nothing. */
+    public $grace = 0;
+
     /**
      * Calculate the grade based on the users response.
      *
-     * Returns 100% only if all correct answers are selected and no incorrect answers are selected.
+     * Returns 100% when every correct choice is selected and no incorrect choice is selected.
+     * When grace grading is enabled on the question, returns 50% when at least one correct
+     * choice is selected and no incorrect choice is selected.
      * Returns 0% otherwise.
      *
      * @param array $response responses, as returned by question_attempt_step::get_qt_data()
@@ -51,13 +56,12 @@ class qtype_mcallornothing_question extends qtype_multichoice_multi_question {
         [$numright, $total] = $this->get_num_parts_right($response);
         $numwrong = $this->get_num_selected_choices($response) - $numright;
         $numcorrect = $this->get_num_correct_choices();
+
         if ($numwrong == 0 && $numcorrect == $numright) {
             $fraction = 1;
-        }
-
-        // SYNERGY LEARNING VS3-26: Local plugin to handle partial marking.
-        if (class_exists(\local_vdspartialmarking\hooks::class)) {
-            \local_vdspartialmarking\hooks::calculate_partially_correct_value($this, $fraction, $numwrong, $numcorrect, $numright);
+        } else if (!empty($this->grace) && $numwrong == 0 && $numright >= 1) {
+            // Grace mode (opt-in): partially correct without any wrong selection scores 50%.
+            $fraction = 0.5;
         }
 
         $state = question_state::graded_state_for_fraction($fraction);
