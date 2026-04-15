@@ -1,0 +1,5 @@
+Release notes
+-------------
+
+Date          Version   Comment
+2026/04/01    1.0.0     Initial release for Moodle 4.5. Based on qtype_multichoiceset.
