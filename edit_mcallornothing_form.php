@@ -38,18 +38,33 @@ class qtype_mcallornothing_edit_form extends question_edit_form {
      * @param object $mform the form being built.
      */
     protected function definition_inner($mform) {
-        $mform->addElement('advcheckbox', 'shuffleanswers',
-                get_string('shuffleanswers', 'qtype_multichoice'), null, null, [0, 1]);
+        $mform->addElement(
+            'advcheckbox',
+            'shuffleanswers',
+            get_string('shuffleanswers', 'qtype_multichoice'),
+            null,
+            null,
+            [0, 1]
+        );
         $mform->addHelpButton('shuffleanswers', 'shuffleanswers', 'qtype_multichoice');
         $mform->setDefault('shuffleanswers', 1);
 
-        $mform->addElement('select', 'answernumbering',
-                get_string('answernumbering', 'qtype_multichoice'),
-                qtype_multichoice::get_numbering_styles());
+        $mform->addElement(
+            'select',
+            'answernumbering',
+            get_string('answernumbering', 'qtype_multichoice'),
+            qtype_multichoice::get_numbering_styles()
+        );
         $mform->setDefault('answernumbering', get_config('qtype_mcallornothing', 'answernumbering'));
 
-        $mform->addElement('selectyesno', 'showstandardinstruction',
-            get_string('showstandardinstruction', 'qtype_mcallornothing'), null, null, [0, 1]);
+        $mform->addElement(
+            'selectyesno',
+            'showstandardinstruction',
+            get_string('showstandardinstruction', 'qtype_mcallornothing'),
+            null,
+            null,
+            [0, 1]
+        );
         $mform->addHelpButton('showstandardinstruction', 'showstandardinstruction', 'qtype_mcallornothing');
         $mform->setDefault('showstandardinstruction', 0);
 
@@ -59,21 +74,33 @@ class qtype_mcallornothing_edit_form extends question_edit_form {
         }
         // SYNERGY LEARNING VS3-26: Local plugin to handle partial marking ends.
 
-        $this->add_per_answer_fields($mform, get_string('choiceno', 'qtype_multichoice', '{no}'),
-                null, max(5, QUESTION_NUMANS_START));
+        $this->add_per_answer_fields(
+            $mform,
+            get_string('choiceno', 'qtype_multichoice', '{no}'),
+            null,
+            max(5, QUESTION_NUMANS_START)
+        );
 
         $mform->addElement('header', 'overallfeedbackhdr', get_string('combinedfeedback', 'question'));
 
         foreach (['correctfeedback', 'incorrectfeedback'] as $feedbackname) {
-            $element = $mform->addElement('editor', $feedbackname, get_string($feedbackname, 'question'),
-                                ['rows' => 5], $this->editoroptions);
+            $element = $mform->addElement(
+                'editor',
+                $feedbackname,
+                get_string($feedbackname, 'question'),
+                ['rows' => 5],
+                $this->editoroptions
+            );
             $mform->setType($feedbackname, PARAM_RAW);
             $element->setValue(['text' => get_string($feedbackname . 'default', 'question')]);
 
             if ($feedbackname == 'incorrectfeedback') {
-                $mform->addElement('advcheckbox', 'shownumcorrect',
-                        get_string('options', 'question'),
-                        get_string('shownumpartscorrect', 'question'));
+                $mform->addElement(
+                    'advcheckbox',
+                    'shownumcorrect',
+                    get_string('options', 'question'),
+                    get_string('shownumpartscorrect', 'question')
+                );
             }
         }
 
@@ -91,15 +118,35 @@ class qtype_mcallornothing_edit_form extends question_edit_form {
      *      field holding an array of answers
      * @return array of form fields.
      */
-    protected function get_per_answer_fields($mform, $label, $gradeoptions,
-            &$repeatedoptions, &$answersoption) {
+    protected function get_per_answer_fields(
+        $mform,
+        $label,
+        $gradeoptions,
+        &$repeatedoptions,
+        &$answersoption
+    ) {
         $repeated = [];
-        $repeated[] = $mform->createElement('editor', 'answer',
-                $label, ['rows' => 1], $this->editoroptions);
-        $repeated[] = $mform->createElement('checkbox', 'correctanswer',
-                get_string('correctanswer', 'qtype_mcallornothing'), '', 'class = "correctanswer"');
-        $repeated[] = $mform->createElement('editor', 'feedback',
-                get_string('feedback', 'question'), ['rows' => 1], $this->editoroptions);
+        $repeated[] = $mform->createElement(
+            'editor',
+            'answer',
+            $label,
+            ['rows' => 1],
+            $this->editoroptions
+        );
+        $repeated[] = $mform->createElement(
+            'checkbox',
+            'correctanswer',
+            get_string('correctanswer', 'qtype_mcallornothing'),
+            '',
+            'class = "correctanswer"'
+        );
+        $repeated[] = $mform->createElement(
+            'editor',
+            'feedback',
+            get_string('feedback', 'question'),
+            ['rows' => 1],
+            $this->editoroptions
+        );
 
         // These are returned by arguments passed by reference.
         $repeatedoptions['answer']['type'] = PARAM_RAW;
@@ -116,10 +163,16 @@ class qtype_mcallornothing_edit_form extends question_edit_form {
      * @return array form field elements for one hint.
      */
     protected function get_hint_fields($withclearwrong = false, $withshownumpartscorrect = false) {
-        list($repeated, $repeatedoptions) = parent::get_hint_fields(
-                $withclearwrong, $withshownumpartscorrect);
-        $repeated[] = $this->_form->createElement('advcheckbox', 'hintshowchoicefeedback', '',
-                get_string('showeachanswerfeedback', 'qtype_mcallornothing'));
+        [$repeated, $repeatedoptions] = parent::get_hint_fields(
+            $withclearwrong,
+            $withshownumpartscorrect
+        );
+        $repeated[] = $this->_form->createElement(
+            'advcheckbox',
+            'hintshowchoicefeedback',
+            '',
+            get_string('showeachanswerfeedback', 'qtype_mcallornothing')
+        );
         return [$repeated, $repeatedoptions];
     }
 

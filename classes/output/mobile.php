@@ -34,7 +34,6 @@ defined('MOODLE_INTERNAL') || die();
  * @license http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 class mobile {
-
     /**
      * Returns the All-or-Nothing question type for the quiz in the mobile app.
      *
@@ -55,9 +54,9 @@ class mobile {
         return [
             'templates' => [[
                 'id' => 'main',
-                'html' => file_get_contents($CFG->dirroot . "/question/type/mcallornothing/mobile/mcallornothing_$versionname.html")
+                'html' => file_get_contents($CFG->dirroot . "/question/type/mcallornothing/mobile/mcallornothing_$versionname.html"),
             ]],
-            'javascript' => file_get_contents($CFG->dirroot . '/question/type/mcallornothing/mobile/mcallornothing.js')
+            'javascript' => file_get_contents($CFG->dirroot . '/question/type/mcallornothing/mobile/mcallornothing.js'),
         ];
     }
 }

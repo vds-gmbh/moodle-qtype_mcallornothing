@@ -32,7 +32,6 @@
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 class behat_qtype_mcallornothing extends behat_base {
-
     /**
      * Return the list of partial named selectors for this plugin.
      *
@@ -41,10 +40,12 @@ class behat_qtype_mcallornothing extends behat_base {
     public static function get_partial_named_selectors(): array {
         return [
             new behat_component_named_selector(
-                'Answer', [
+                'Answer',
+                [
                     <<<XPATH
     .//div[@data-region='answer-label']//*[contains(text(), %locator%)]
 XPATH
+                ,
                 ]
             ),
         ];

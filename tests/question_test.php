@@ -22,6 +22,8 @@
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
+defined('MOODLE_INTERNAL') || die();
+
 global $CFG;
 require_once($CFG->dirroot . '/question/engine/tests/helpers.php');
 require_once($CFG->dirroot . '/question/type/mcallornothing/tests/helper.php');
@@ -32,7 +34,7 @@ require_once($CFG->dirroot . '/question/type/mcallornothing/tests/helper.php');
  * @copyright  2026 onwards VdS Schadenverhütung
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
-class qtype_mcallornothing_question_test extends advanced_testcase {
+class question_test extends advanced_testcase {
     /**
      * Get a test question.
      *
@@ -57,10 +59,12 @@ class qtype_mcallornothing_question_test extends advanced_testcase {
 
         $this->assertFalse($question->is_complete_response([]));
         $this->assertFalse($question->is_complete_response(
-                ['choice0' => '0', 'choice1' => '0', 'choice2' => '0', 'choice3' => '0']));
+            ['choice0' => '0', 'choice1' => '0', 'choice2' => '0', 'choice3' => '0']
+        ));
         $this->assertTrue($question->is_complete_response(['choice1' => '1']));
         $this->assertTrue($question->is_complete_response(
-                ['choice0' => '1', 'choice1' => '1', 'choice2' => '1', 'choice3' => '1']));
+            ['choice0' => '1', 'choice1' => '1', 'choice2' => '1', 'choice3' => '1']
+        ));
     }
 
     public function test_is_gradable_response() {
@@ -69,10 +73,12 @@ class qtype_mcallornothing_question_test extends advanced_testcase {
 
         $this->assertFalse($question->is_gradable_response([]));
         $this->assertFalse($question->is_gradable_response(
-                ['choice0' => '0', 'choice1' => '0', 'choice2' => '0', 'choice3' => '0']));
+            ['choice0' => '0', 'choice1' => '0', 'choice2' => '0', 'choice3' => '0']
+        ));
         $this->assertTrue($question->is_gradable_response(['choice1' => '1']));
         $this->assertTrue($question->is_gradable_response(
-                ['choice0' => '1', 'choice1' => '1', 'choice2' => '1', 'choice3' => '1']));
+            ['choice0' => '1', 'choice1' => '1', 'choice2' => '1', 'choice3' => '1']
+        ));
     }
 
     public function test_grading() {
@@ -80,15 +86,24 @@ class qtype_mcallornothing_question_test extends advanced_testcase {
         $question->shuffleanswers = false;
         $question->start_attempt(new question_attempt_step(), 1);
 
-        $this->assertEquals([1, question_state::$gradedright],
-                $question->grade_response(['choice0' => '1', 'choice2' => '1']));
-        $this->assertEquals([0, question_state::$gradedwrong],
-                $question->grade_response(['choice0' => '1']));
-        $this->assertEquals([0, question_state::$gradedwrong],
-                $question->grade_response(
-                        ['choice0' => '1', 'choice1' => '1', 'choice2' => '1']));
-        $this->assertEquals([0, question_state::$gradedwrong],
-                $question->grade_response(['choice1' => '1']));
+        $this->assertEquals(
+            [1, question_state::$gradedright],
+            $question->grade_response(['choice0' => '1', 'choice2' => '1'])
+        );
+        $this->assertEquals(
+            [0, question_state::$gradedwrong],
+            $question->grade_response(['choice0' => '1'])
+        );
+        $this->assertEquals(
+            [0, question_state::$gradedwrong],
+            $question->grade_response(
+                ['choice0' => '1', 'choice1' => '1', 'choice2' => '1']
+            )
+        );
+        $this->assertEquals(
+            [0, question_state::$gradedwrong],
+            $question->grade_response(['choice1' => '1'])
+        );
     }
 
     public function test_get_correct_response() {
@@ -96,8 +111,10 @@ class qtype_mcallornothing_question_test extends advanced_testcase {
         $question->shuffleanswers = false;
         $question->start_attempt(new question_attempt_step(), 1);
 
-        $this->assertEquals(['choice0' => '1', 'choice2' => '1'],
-                $question->get_correct_response());
+        $this->assertEquals(
+            ['choice0' => '1', 'choice2' => '1'],
+            $question->get_correct_response()
+        );
     }
 
     public function test_get_question_summary() {
@@ -117,8 +134,10 @@ class qtype_mcallornothing_question_test extends advanced_testcase {
         $mc->shuffleanswers = false;
         $mc->start_attempt(new question_attempt_step(), 1);
 
-        $summary = $mc->summarise_response(['choice1' => 1, 'choice2' => 1],
-                test_question_maker::get_a_qa($mc));
+        $summary = $mc->summarise_response(
+            ['choice1' => 1, 'choice2' => 1],
+            test_question_maker::get_a_qa($mc)
+        );
 
         $this->assertEquals('Two; Three', $summary);
     }

@@ -53,8 +53,12 @@ class qtype_mcallornothing extends question_type {
      */
     public function get_question_options($question) {
         global $DB, $OUTPUT;
-        $question->options = $DB->get_record('qtype_mcallornothing_options',
-                ['questionid' => $question->id], '*', MUST_EXIST);
+        $question->options = $DB->get_record(
+            'qtype_mcallornothing_options',
+            ['questionid' => $question->id],
+            '*',
+            MUST_EXIST
+        );
         if ($question->options === false) {
             // If this has happened, then we have a problem.
             // For the user to be able to edit or delete this question, we need options.
@@ -109,8 +113,11 @@ class qtype_mcallornothing extends question_type {
         $context = $question->context;
         $result = new stdClass();
 
-        $oldanswers = $DB->get_records('question_answers',
-                ['question' => $question->id], 'id ASC');
+        $oldanswers = $DB->get_records(
+            'question_answers',
+            ['question' => $question->id],
+            'id ASC'
+        );
 
         // Following hack to check at least two answers exist.
         $answercount = 0;
@@ -144,8 +151,13 @@ class qtype_mcallornothing extends question_type {
 
             if (is_array($answerdata)) {
                 // Doing an import.
-                $answer->answer = $this->import_or_save_files($answerdata,
-                        $context, 'question', 'answer', $answer->id);
+                $answer->answer = $this->import_or_save_files(
+                    $answerdata,
+                    $context,
+                    'question',
+                    'answer',
+                    $answer->id
+                );
                 $answer->answerformat = $answerdata['format'];
             } else {
                 // Saving the form.
@@ -153,8 +165,13 @@ class qtype_mcallornothing extends question_type {
                 $answer->answerformat = FORMAT_HTML;
             }
             $answer->fraction = !empty($question->correctanswer[$key]);
-            $answer->feedback = $this->import_or_save_files($question->feedback[$key],
-                    $context, 'question', 'answerfeedback', $answer->id);
+            $answer->feedback = $this->import_or_save_files(
+                $question->feedback[$key],
+                $context,
+                'question',
+                'answerfeedback',
+                $answer->id
+            );
             $answer->feedbackformat = $question->feedback[$key]['format'];
 
             $DB->update_record('question_answers', $answer);
@@ -190,11 +207,21 @@ class qtype_mcallornothing extends question_type {
 
         $options->shuffleanswers = $question->shuffleanswers;
         $options->showstandardinstruction = !empty($question->showstandardinstruction);
-        $options->correctfeedback = $this->import_or_save_files($question->correctfeedback,
-                $context, 'question', 'correctfeedback', $question->id);
+        $options->correctfeedback = $this->import_or_save_files(
+            $question->correctfeedback,
+            $context,
+            'question',
+            'correctfeedback',
+            $question->id
+        );
         $options->correctfeedbackformat = $question->correctfeedback['format'];
-        $options->incorrectfeedback = $this->import_or_save_files($question->incorrectfeedback,
-                $context, 'question', 'incorrectfeedback', $question->id);
+        $options->incorrectfeedback = $this->import_or_save_files(
+            $question->incorrectfeedback,
+            $context,
+            'question',
+            'incorrectfeedback',
+            $question->id
+        );
         $options->incorrectfeedbackformat = $question->incorrectfeedback['format'];
         $options->shownumcorrect = !empty($question->shownumcorrect);
 
@@ -213,8 +240,11 @@ class qtype_mcallornothing extends question_type {
         global $DB;
         $context = $formdata->context;
 
-        $oldhints = $DB->get_records('question_hints',
-                ['questionid' => $formdata->id], 'id ASC');
+        $oldhints = $DB->get_records(
+            'question_hints',
+            ['questionid' => $formdata->id],
+            'id ASC'
+        );
 
         if (!empty($formdata->hint)) {
             $numhints = max(array_keys($formdata->hint)) + 1;
@@ -255,8 +285,10 @@ class qtype_mcallornothing extends question_type {
 
             $showchoicefeedback = !empty($formdata->hintshowchoicefeedback[$i]);
 
-            if (empty($formdata->hint[$i]['text']) && empty($clearwrong) &&
-                    empty($shownumcorrect) && empty($showchoicefeedback)) {
+            if (
+                empty($formdata->hint[$i]['text']) && empty($clearwrong) &&
+                    empty($shownumcorrect) && empty($showchoicefeedback)
+            ) {
                 continue;
             }
 
@@ -269,8 +301,13 @@ class qtype_mcallornothing extends question_type {
                 $hint->id = $DB->insert_record('question_hints', $hint);
             }
 
-            $hint->hint = $this->import_or_save_files($formdata->hint[$i],
-                    $context, 'question', 'hint', $hint->id);
+            $hint->hint = $this->import_or_save_files(
+                $formdata->hint[$i],
+                $context,
+                'question',
+                'hint',
+                $hint->id
+            );
             $hint->hintformat = $formdata->hint[$i]['format'];
             if ($withparts) {
                 $hint->clearwrong = $clearwrong;
@@ -405,9 +442,17 @@ class qtype_mcallornothing extends question_type {
 
         foreach ($questiondata->options->answers as $aid => $answer) {
             $parts[$aid] = [$aid => new question_possible_response(
-                            html_to_text(format_text(
-                            $answer->answer, $answer->answerformat, ['noclean' => true]),
-                            0, false), $answer->fraction)];
+                html_to_text(
+                    format_text(
+                        $answer->answer,
+                        $answer->answerformat,
+                        ['noclean' => true]
+                    ),
+                    0,
+                    false
+                ),
+                $answer->fraction
+            )];
         }
 
         return $parts;
@@ -444,10 +489,20 @@ class qtype_mcallornothing extends question_type {
         parent::move_files($questionid, $oldcontextid, $newcontextid);
         $this->move_files_in_answers($questionid, $oldcontextid, $newcontextid, true);
 
-        $fs->move_area_files_to_new_context($oldcontextid,
-                $newcontextid, 'question', 'correctfeedback', $questionid);
-        $fs->move_area_files_to_new_context($oldcontextid,
-                $newcontextid, 'question', 'incorrectfeedback', $questionid);
+        $fs->move_area_files_to_new_context(
+            $oldcontextid,
+            $newcontextid,
+            'question',
+            'correctfeedback',
+            $questionid
+        );
+        $fs->move_area_files_to_new_context(
+            $oldcontextid,
+            $newcontextid,
+            'question',
+            'incorrectfeedback',
+            $questionid
+        );
     }
 
     /**
@@ -482,7 +537,7 @@ class qtype_mcallornothing extends question_type {
         $fs = get_file_storage();
         $contextid = $question->contextid;
 
-        $expout .= "    <shuffleanswers>".$format->get_single($question->options->shuffleanswers)."</shuffleanswers>\n";
+        $expout .= "    <shuffleanswers>" . $format->get_single($question->options->shuffleanswers) . "</shuffleanswers>\n";
 
         $textformat = $format->get_format($question->options->correctfeedbackformat);
         $files = $fs->get_area_files($contextid, 'question', 'correctfeedback', $question->id);
@@ -539,25 +594,38 @@ class qtype_mcallornothing extends question_type {
         // SYNERGY LEARNING VS3-26: Local plugin to handle partial marking ends.
 
         $question->shuffleanswers = $format->trans_single(
-                $format->getpath($data, ['#', 'shuffleanswers', 0, '#'], 1));
+            $format->getpath($data, ['#', 'shuffleanswers', 0, '#'], 1)
+        );
 
-        $question->answernumbering = $format->getpath($data,
-                ['#', 'answernumbering', 0, '#'], 'abc');
+        $question->answernumbering = $format->getpath(
+            $data,
+            ['#', 'answernumbering', 0, '#'],
+            'abc'
+        );
 
         $question->showstandardinstruction = $format->trans_single(
-                 $format->getpath($data, ['#', 'showstandardinstruction', 0, '#'], 1));
+            $format->getpath($data, ['#', 'showstandardinstruction', 0, '#'], 1)
+        );
 
         $question->correctfeedback = [];
-        $question->correctfeedback['text'] = $format->getpath($data, ['#', 'correctfeedback', 0, '#', 'text', 0, '#'],
-                '', true);
+        $question->correctfeedback['text'] = $format->getpath(
+            $data,
+            ['#', 'correctfeedback', 0, '#', 'text', 0, '#'],
+            '',
+            true
+        );
         $question->correctfeedback['format'] = $format->trans_format(
-                 $format->getpath($data, ['#', 'correctfeedback', 0, '@', 'format'],
-                 $format->get_format($question->questiontextformat)));
+            $format->getpath(
+                $data,
+                ['#', 'correctfeedback', 0, '@', 'format'],
+                $format->get_format($question->questiontextformat)
+            )
+        );
         $question->correctfeedback['files'] = [];
         // Restore files in correctfeedback.
         $files = $format->getpath($data, ['#', 'correctfeedback', 0, '#', 'file'], [], false);
         foreach ($files as $file) {
-            $filesdata = new stdclass;
+            $filesdata = new stdclass();
             $filesdata->content = $file['#'];
             $filesdata->encoding = $file['@']['encoding'];
             $filesdata->name = $file['@']['name'];
@@ -565,16 +633,24 @@ class qtype_mcallornothing extends question_type {
         }
 
         $question->incorrectfeedback = [];
-        $question->incorrectfeedback['text'] = $format->getpath($data, ['#', 'incorrectfeedback', 0, '#', 'text', 0, '#'],
-                '', true);
+        $question->incorrectfeedback['text'] = $format->getpath(
+            $data,
+            ['#', 'incorrectfeedback', 0, '#', 'text', 0, '#'],
+            '',
+            true
+        );
         $question->incorrectfeedback['format'] = $format->trans_format(
-                $format->getpath($data, ['#', 'incorrectfeedback', 0, '@', 'format'],
-                $format->get_format($question->questiontextformat)));
+            $format->getpath(
+                $data,
+                ['#', 'incorrectfeedback', 0, '@', 'format'],
+                $format->get_format($question->questiontextformat)
+            )
+        );
         $question->incorrectfeedback['files'] = [];
         // Restore files in incorrectfeedback.
         $files = $format->getpath($data, ['#', 'incorrectfeedback', 0, '#', 'file'], [], false);
         foreach ($files as $file) {
-            $filesdata = new stdclass;
+            $filesdata = new stdclass();
             $filesdata->content = $file['#'];
             $filesdata->encoding = $file['@']['encoding'];
             $filesdata->name = $file['@']['name'];
@@ -586,8 +662,11 @@ class qtype_mcallornothing extends question_type {
         // Run through the answers.
         $answers = $data['#']['answer'];
         foreach ($answers as $answer) {
-            $ans = $format->import_answer($answer, true,
-                    $format->get_format($question->questiontextformat));
+            $ans = $format->import_answer(
+                $answer,
+                true,
+                $format->get_format($question->questiontextformat)
+            );
             $question->answer[] = $ans->answer;
 
             // FIX: Some tools set fraction to `0.0`
@@ -600,13 +679,21 @@ class qtype_mcallornothing extends question_type {
             if (array_key_exists('correctanswer', $answer['#'])) {
                 $keys = array_keys($question->correctanswer);
                 $key = end($keys);
-                $question->correctanswer[$key] = $format->getpath($answer,
-                        ['#', 'correctanswer', 0, '#'], 0);
+                $question->correctanswer[$key] = $format->getpath(
+                    $answer,
+                    ['#', 'correctanswer', 0, '#'],
+                    0
+                );
             }
         }
 
-        $format->import_hints($question, $data, true, true,
-                $format->get_format($question->questiontextformat));
+        $format->import_hints(
+            $question,
+            $data,
+            true,
+            true,
+            $format->get_format($question->questiontextformat)
+        );
 
         // Get extra choicefeedback setting from each hint.
         if (!empty($question->hintoptions)) {
@@ -662,7 +749,6 @@ class qtype_mcallornothing extends question_type {
     public function export_to_htmltable($question, qformat_xml $format, $extra = null) {
         return $this->export_to_xml($question, $format, $extra);
     }
-
 }
 
 /**
@@ -688,8 +774,14 @@ class qtype_mcallornothing_hint extends question_hint_with_parts {
      * @param bool $clearwrong whether the wrong parts should be reset.
      * @param bool $showchoicefeedback whether to show the feedback for each choice.
      */
-    public function __construct($id, $hint, $hintformat, $shownumcorrect,
-            $clearwrong, $showchoicefeedback) {
+    public function __construct(
+        $id,
+        $hint,
+        $hintformat,
+        $shownumcorrect,
+        $clearwrong,
+        $showchoicefeedback
+    ) {
         parent::__construct($id, $hint, $hintformat, $shownumcorrect, $clearwrong);
         $this->showchoicefeedback = $showchoicefeedback;
     }
@@ -701,8 +793,14 @@ class qtype_mcallornothing_hint extends question_hint_with_parts {
      * @return question_hint_with_parts
      */
     public static function load_from_record($row) {
-        return new qtype_mcallornothing_hint($row->id, $row->hint, $row->hintformat,
-                $row->shownumcorrect, $row->clearwrong, !empty($row->options));
+        return new qtype_mcallornothing_hint(
+            $row->id,
+            $row->hint,
+            $row->hintformat,
+            $row->shownumcorrect,
+            $row->clearwrong,
+            !empty($row->options)
+        );
     }
 
     /**

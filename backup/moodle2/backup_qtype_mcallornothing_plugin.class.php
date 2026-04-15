@@ -32,7 +32,6 @@ defined('MOODLE_INTERNAL') || die();
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 class backup_qtype_mcallornothing_plugin extends backup_qtype_plugin {
-
     /**
      * Returns the qtype information to attach to question element
      */
@@ -64,7 +63,6 @@ class backup_qtype_mcallornothing_plugin extends backup_qtype_plugin {
             $mcallornothing = \local_vdspartialmarking\hooks::create_backup_item();
         }
         // SYNERGY LEARNING VS3-26: Local plugin to handle partial marking ends.
-
 
         // Now the own qtype tree.
         $pluginwrapper->add_child($mcallornothing);

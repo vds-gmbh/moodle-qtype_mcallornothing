@@ -22,6 +22,8 @@
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
+defined('MOODLE_INTERNAL') || die();
+
 global $CFG;
 require_once($CFG->dirroot . '/question/type/mcallornothing/questiontype.php');
 
@@ -31,7 +33,7 @@ require_once($CFG->dirroot . '/question/type/mcallornothing/questiontype.php');
  * @copyright  2026 onwards VdS Schadenverhütung
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
-class qtype_mcallornothing_test extends advanced_testcase {
+class questiontype_test extends advanced_testcase {
     /** @var $qtype the question type. */
     protected $qtype;
 

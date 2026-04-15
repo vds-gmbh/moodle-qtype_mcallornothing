@@ -32,7 +32,6 @@ defined('MOODLE_INTERNAL') || die();
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 class restore_qtype_mcallornothing_plugin extends restore_qtype_plugin {
-
     /**
      * Returns the paths to be handled by the plugin at question level
      */
@@ -122,8 +121,11 @@ class restore_qtype_mcallornothing_plugin extends restore_qtype_plugin {
         $contents = [];
 
         $fields = ['correctfeedback', 'incorrectfeedback'];
-        $contents[] = new restore_decode_content('qtype_mcallornothing_options',
-                $fields, 'qtype_mcallornothing_options');
+        $contents[] = new restore_decode_content(
+            'qtype_mcallornothing_options',
+            $fields,
+            'qtype_mcallornothing_options'
+        );
 
         return $contents;
     }

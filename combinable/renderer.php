@@ -32,9 +32,7 @@ defined('MOODLE_INTERNAL') || die();
  * @copyright  2026 onwards VdS Schadenverhütung
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
-class qtype_mcallornothing_embedded_renderer extends qtype_renderer
-    implements qtype_combined_subquestion_renderer_interface {
-
+class qtype_mcallornothing_embedded_renderer extends qtype_renderer implements qtype_combined_subquestion_renderer_interface {
     /**
      * Render subquestions into HTML
      *
@@ -44,10 +42,12 @@ class qtype_mcallornothing_embedded_renderer extends qtype_renderer
      * @param int $placeno
      * @return string
      */
-    public function subquestion(question_attempt $qa,
-                                question_display_options $options,
-                                qtype_combined_combinable_base $subq,
-                                $placeno) {
+    public function subquestion(
+        question_attempt $qa,
+        question_display_options $options,
+        qtype_combined_combinable_base $subq,
+        $placeno
+    ) {
         $question = $subq->question;
         $fullresponse = new qtype_combined_response_array_param($qa->get_last_qt_data());
         $response = $fullresponse->for_subq($subq);
@@ -64,7 +64,7 @@ class qtype_mcallornothing_embedded_renderer extends qtype_renderer
         $feedbackimg = [];
         $classes = [];
         foreach ($question->get_order($qa) as $value => $ansid) {
-            $inputname = $qa->get_qt_field_name($subq->step_data_name('choice'.$value));
+            $inputname = $qa->get_qt_field_name($subq->step_data_name('choice' . $value));
             $ans = $question->answers[$ansid];
             $inputattributes = [];
             $inputattributes['name'] = $inputname;
@@ -84,11 +84,19 @@ class qtype_mcallornothing_embedded_renderer extends qtype_renderer
             }
 
             $checkboxes[] = html_writer::empty_tag('input', $inputattributes + $commonattributes) .
-                html_writer::tag('label',
+                html_writer::tag(
+                    'label',
                     html_writer::span(\qtype_combined\utils::number_in_style($value, $question->answernumbering), 'answernumber') .
                     $question->make_html_inline($question->format_text(
-                        $ans->answer, $ans->answerformat, $qa, 'question', 'answer', $ansid)),
-                    ['for' => $inputattributes['id']]);
+                        $ans->answer,
+                        $ans->answerformat,
+                        $qa,
+                        'question',
+                        'answer',
+                        $ansid
+                    )),
+                    ['for' => $inputattributes['id']]
+                );
 
             $class = 'r' . ($value % 2);
             if ($options->correctness && $isselected) {
@@ -112,8 +120,11 @@ class qtype_mcallornothing_embedded_renderer extends qtype_renderer
         }
 
         foreach ($checkboxes as $key => $checkbox) {
-            $cbhtml .= html_writer::tag($inputwraptag, $checkbox . ' ' . $feedbackimg[$key],
-                                        ['class' => $classes[$key]]) . "\n";
+            $cbhtml .= html_writer::tag(
+                $inputwraptag,
+                $checkbox . ' ' . $feedbackimg[$key],
+                ['class' => $classes[$key]]
+            ) . "\n";
         }
 
         $result = html_writer::tag($inputwraptag, $cbhtml, ['class' => 'answer']);

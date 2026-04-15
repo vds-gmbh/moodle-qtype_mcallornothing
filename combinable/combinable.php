@@ -31,7 +31,6 @@ defined('MOODLE_INTERNAL') || die();
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 class qtype_combined_combinable_type_mcallornothing extends qtype_combined_combinable_type_base {
-
     /** @var Name of identifier */
     protected $identifier = 'allornothing';
 
@@ -93,7 +92,6 @@ class qtype_combined_combinable_type_mcallornothing extends qtype_combined_combi
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 class qtype_combined_combinable_mcallornothing extends qtype_combined_combinable_accepts_vertical_or_horizontal_layout_param {
-
     /**
      * Add a quick form to the basic form
      *
@@ -105,16 +103,28 @@ class qtype_combined_combinable_mcallornothing extends qtype_combined_combinable
         $mform->addElement('advcheckbox', $this->form_field_name('shuffleanswers'), get_string('shuffle', 'qtype_gapselect'));
 
         $answerels = [];
-        $answerels[] = $mform->createElement('editor', $this->form_field_name('answer'),
-                get_string('choiceno', 'qtype_multichoice', '{no}'), ['rows' => 1]);
+        $answerels[] = $mform->createElement(
+            'editor',
+            $this->form_field_name('answer'),
+            get_string('choiceno', 'qtype_multichoice', '{no}'),
+            ['rows' => 1]
+        );
         $mform->setType($this->form_field_name('answer'), PARAM_RAW);
-        $answerels[] = $mform->createElement('advcheckbox', $this->form_field_name('correctanswer'),
-                get_string('correct', 'question'), get_string('correct', 'question'));
+        $answerels[] = $mform->createElement(
+            'advcheckbox',
+            $this->form_field_name('correctanswer'),
+            get_string('correct', 'question'),
+            get_string('correct', 'question')
+        );
 
-        $answergroupel = $mform->createElement('group',
-                $this->form_field_name('answergroup'),
-                get_string('choiceno', 'qtype_multichoice', '{no}'),
-                $answerels, null, false);
+        $answergroupel = $mform->createElement(
+            'group',
+            $this->form_field_name('answergroup'),
+            get_string('choiceno', 'qtype_multichoice', '{no}'),
+            $answerels,
+            null,
+            false
+        );
         if ($this->questionrec !== null) {
             $countanswers = count($this->questionrec->options->answers);
         } else {
@@ -128,14 +138,16 @@ class qtype_combined_combinable_mcallornothing extends qtype_combined_combinable
             $repeatsatstart = $countanswers;
         }
 
-        $combinedform->repeat_elements([$answergroupel],
+        $combinedform->repeat_elements(
+            [$answergroupel],
             $repeatsatstart,
             [],
             $this->form_field_name('noofchoices'),
             $this->form_field_name('morechoices'),
             QUESTION_NUMANS_ADD,
             get_string('addmorechoiceblanks', 'qtype_gapselect'),
-            true);
+            true
+        );
     }
 
     /**
@@ -169,8 +181,10 @@ class qtype_combined_combinable_mcallornothing extends qtype_combined_combinable
             if ('' !== trim($answer)) {
                 $nonemptyanswerblanks[] = $anskey;
             } else if ($this->formdata->correctanswer[$anskey]) {
-                $errors[$this->form_field_name("answergroup[{$anskey}]")] = get_string('err_correctanswerblank',
-                                                                                       'qtype_mcallornothing');
+                $errors[$this->form_field_name("answergroup[{$anskey}]")] = get_string(
+                    'err_correctanswerblank',
+                    'qtype_mcallornothing'
+                );
             }
         }
         if (count($nonemptyanswerblanks) < 2) {

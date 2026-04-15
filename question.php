@@ -34,7 +34,6 @@ require_once($CFG->dirroot . '/question/type/multichoice/question.php');
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 class qtype_mcallornothing_question extends qtype_multichoice_multi_question {
-
     /** @var int standard instruction to be displayed if enabled. */
     public $showstandardinstruction = 0;
 
@@ -49,7 +48,7 @@ class qtype_mcallornothing_question extends qtype_multichoice_multi_question {
      */
     public function grade_response(array $response) {
         $fraction = 0;
-        list($numright, $total) = $this->get_num_parts_right($response);
+        [$numright, $total] = $this->get_num_parts_right($response);
         $numwrong = $this->get_num_selected_choices($response) - $numright;
         $numcorrect = $this->get_num_correct_choices();
         if ($numwrong == 0 && $numcorrect == $numright) {
@@ -75,7 +74,8 @@ class qtype_mcallornothing_question extends qtype_multichoice_multi_question {
      * @param question_hint_with_parts $hint a hint.
      */
     protected function disable_hint_settings_when_too_many_selected(
-            question_hint_with_parts $hint) {
+        question_hint_with_parts $hint
+    ) {
         parent::disable_hint_settings_when_too_many_selected($hint);
         $hint->showchoicefeedback = false;
     }
