@@ -35,3 +35,5 @@ $string['privacy:metadata'] = 'The All-or-Nothing Multiple Choice plugin does no
 $string['showeachanswerfeedback'] = 'Mostrar los comentarios de las respuestas seleccionadas.';
 $string['showstandardinstruction'] = 'Mostrar instrucciones estándar';
 $string['showstandardinstruction_help'] = 'Si es que se muestran o no las instrucciones &quot;Seleccione una o más:&quot; antes de las respuestas de opción múltiple de todo o nada.';
+$string['grace'] = 'Otorgar 50% por una respuesta parcialmente correcta';
+$string['grace_help'] = 'Por defecto, este tipo de pregunta es estrictamente de todo o nada: el encuestado debe seleccionar todas las opciones correctas y ninguna incorrecta para obtener puntos. Si esta opción está habilitada, el encuestado recibe el 50% de los puntos cuando selecciona al menos una opción correcta y ninguna incorrecta. El 100% sigue requiriendo una respuesta completamente correcta.';

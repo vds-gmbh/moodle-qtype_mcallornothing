@@ -2,6 +2,13 @@ Release notes
 -------------
 
 Date          Version   Comment
+2026/04/16    1.2.0     Submission readiness: extract hint class to
+                        classes/question_hint_mcallornothing.php, split
+                        combinable type into combinable/combinable_type.php,
+                        remove unnecessary MOODLE_INTERNAL checks, add Spanish
+                        grace/grace_help strings, bump maturity to BETA.
+                        Plugin now passes phpcs moodle standard with zero
+                        errors and zero warnings.
 2026/04/15    1.1.0     Absorb partial-marking feature previously provided by
                         the external local_vdspartialmarking plugin. New grace
                         column on qtype_mcallornothing_options (default 0 =

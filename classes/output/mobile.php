@@ -24,9 +24,6 @@
  */
 
 namespace qtype_mcallornothing\output;
-
-defined('MOODLE_INTERNAL') || die();
-
 /**
  * Mobile output class for question type mcallornothing.
  *
@@ -56,7 +53,9 @@ class mobile {
         return [
             'templates' => [[
                 'id' => 'main',
-                'html' => file_get_contents($CFG->dirroot . "/question/type/mcallornothing/mobile/mcallornothing_$versionname.html"),
+                'html' => file_get_contents(
+                    $CFG->dirroot . "/question/type/mcallornothing/mobile/mcallornothing_$versionname.html"
+                ),
             ]],
             'javascript' => file_get_contents($CFG->dirroot . '/question/type/mcallornothing/mobile/mcallornothing.js'),
         ];

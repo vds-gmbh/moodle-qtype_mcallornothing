@@ -24,9 +24,6 @@
  */
 
 namespace qtype_mcallornothing\privacy;
-
-defined('MOODLE_INTERNAL') || die();
-
 /**
  * Privacy Subsystem for qtype_mcallornothing implementing null_provider.
  *

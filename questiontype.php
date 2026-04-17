@@ -30,6 +30,8 @@ require_once($CFG->dirroot . '/question/engine/lib.php');
 require_once($CFG->dirroot . '/question/type/multichoice/questiontype.php');
 require_once($CFG->dirroot . '/question/format/xml/format.php');
 
+use qtype_mcallornothing\question_hint_mcallornothing;
+
 /**
  * The All-or-Nothing multiple choice question type.
  *
@@ -330,7 +332,7 @@ class qtype_mcallornothing extends question_type {
      * @return stdObject
      */
     protected function make_hint($hint) {
-        return qtype_mcallornothing_hint::load_from_record($hint);
+        return question_hint_mcallornothing::load_from_record($hint);
     }
 
     /**
@@ -376,10 +378,13 @@ class qtype_mcallornothing extends question_type {
     /**
      * Make an answer.
      *
+     * Overridden to widen visibility from protected to public so that the
+     * question class can call $this->qtype->make_answer().
+     *
      * @param stdObject $answer the answer
      * @return stdObject
      */
-    public function make_answer($answer) {
+    public function make_answer($answer) { // phpcs:ignore Generic.CodeAnalysis.UselessOverridingMethod.Found
         // Overridden just so we can make it public for use by question.php.
         return parent::make_answer($answer);
     }
@@ -731,71 +736,5 @@ class qtype_mcallornothing extends question_type {
      */
     public function export_to_htmltable($question, qformat_xml $format, $extra = null) {
         return $this->export_to_xml($question, $format, $extra);
-    }
-}
-
-/**
- * An extension of question_hint_with_parts for mcallornothing questions.
- *
- * This has an extra option for whether to show the feedback for each choice.
- *
- * @package    qtype_mcallornothing
- * @copyright  1999 onwards Martin Dougiamas  {@link http://moodle.com}
- * @copyright  2010 The Open University
- * @copyright  2026 onwards VdS Schadenverhütung
- * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
- */
-class qtype_mcallornothing_hint extends question_hint_with_parts {
-    /** @var bool whether to show the feedback for each choice. */
-    public $showchoicefeedback;
-
-    /**
-     * Constructor.
-     *
-     * @param int $id Question ID
-     * @param string $hint The hint text
-     * @param int $hintformat
-     * @param bool $shownumcorrect whether the number of right parts should be shown
-     * @param bool $clearwrong whether the wrong parts should be reset.
-     * @param bool $showchoicefeedback whether to show the feedback for each choice.
-     */
-    public function __construct(
-        $id,
-        $hint,
-        $hintformat,
-        $shownumcorrect,
-        $clearwrong,
-        $showchoicefeedback
-    ) {
-        parent::__construct($id, $hint, $hintformat, $shownumcorrect, $clearwrong);
-        $this->showchoicefeedback = $showchoicefeedback;
-    }
-
-    /**
-     * Create a basic hint from a row loaded from the question_hints table in the database.
-     *
-     * @param object $row with $row->hint, ->shownumcorrect and ->clearwrong set.
-     * @return question_hint_with_parts
-     */
-    public static function load_from_record($row) {
-        return new qtype_mcallornothing_hint(
-            $row->id,
-            $row->hint,
-            $row->hintformat,
-            $row->shownumcorrect,
-            $row->clearwrong,
-            !empty($row->options)
-        );
-    }
-
-    /**
-     * Adjust the display options
-     *
-     * @param question_display_options $options display options
-     * @return void
-     */
-    public function adjust_display_options(question_display_options $options) {
-        parent::adjust_display_options($options);
-        $options->suppresschoicefeedback = !$this->showchoicefeedback;
     }
 }

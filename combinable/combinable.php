@@ -25,70 +25,10 @@
 
 defined('MOODLE_INTERNAL') || die();
 
-/**
- * Defines the hooks necessary to make the oumultiresponse question type combinable
- *
- * @copyright  2019 Jean-Michel Vedrine
- * @copyright  2026 onwards VdS Schadenverhütung
- * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
- */
-class qtype_combined_combinable_type_mcallornothing extends qtype_combined_combinable_type_base {
-    /** @var Name of identifier */
-    protected $identifier = 'allornothing';
-
-    /**
-     * Get the extra question properties
-     *
-     * @return array containing the numbering format
-     */
-    protected function extra_question_properties() {
-        return ['answernumbering' => 'abc'] + $this->combined_feedback_properties();
-    }
-
-    /**
-     * Get the extra question properties
-     *
-     * @return array containing the numbering format
-     */
-    protected function extra_answer_properties() {
-        return ['feedback' => ['text' => '', 'format' => FORMAT_PLAIN]];
-    }
-
-    /**
-     * Get the subquestion option fields
-     *
-     * @return array containing the options
-     */
-    public function subq_form_fragment_question_option_fields() {
-        return ['shuffleanswers' => false];
-    }
-
-    /**
-     * Process the subquestion data
-     *
-     * @param array $subqdata Subquestion data
-     * @return array containing the answer properties
-     */
-    protected function transform_subq_form_data_to_full($subqdata) {
-        $data = parent::transform_subq_form_data_to_full($subqdata);
-        foreach ($data->answer as $anskey => $answer) {
-            $data->answer[$anskey] = ['text' => $answer['text'], 'format' => $answer['format']];
-        }
-        return $this->add_per_answer_properties($data);
-    }
-
-    /**
-     * Get the extra parameters for default
-     *
-     * @return string
-     */
-    protected function third_param_for_default_question_text() {
-        return 'v';
-    }
-}
+require_once(__DIR__ . '/combinable_type.php');
 
 /**
- * Defines the hooks necessary to make the oumultiresponse question type combinable
+ * Combinable class for the mcallornothing question type (qtype_combined integration).
  *
  * @copyright  2019 Jean-Michel Vedrine
  * @copyright  2026 onwards VdS Schadenverhütung
