@@ -6,7 +6,7 @@
 
 .que.mcallornothing .answer div.r0,
 .que.mcallornothing .answer div.r1 {
-    text-indent: 0px !Important;
+    text-indent: 0;
     display: flex;
     align-items: baseline;
 }
@@ -78,7 +78,7 @@ body#page-question-type-mcallornothing div[id^=fitem_id_][id*=feedback_] {
 
 /* Middle. Added JR november 2021. */
 body#page-question-type-mcallornothing .correctanswer {
-    margin-bottom: 0em;
+    margin-bottom: 0;
     background: #eee;
     border: 1px solid #bbb;
     border-top: 0;
